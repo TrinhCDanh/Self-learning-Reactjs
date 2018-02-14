@@ -6,10 +6,10 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      <div className="row">
-        <Course />
-        <Course />
-        <Course />
+      <div className="row equal">
+        <Course name="React" free={true}>React is very simple</Course>
+        <Course name="Nodejs" free={true}/>
+        <Course name="Laravel" free={false}/>
       </div>
     );
   }
