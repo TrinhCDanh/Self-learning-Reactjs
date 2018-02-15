@@ -5,8 +5,8 @@ class Course extends Component {
 
 	constructor(props) {
 		super(props);
-
 		this.handleClick3 = this.handleClick3.bind(this);
+		this.handleRegister = this.handleRegister.bind(this);
 	}
 
 	handleClick1() {
@@ -21,6 +21,10 @@ class Course extends Component {
 		alert(this.props.name);
 	}
 
+	handleRegister() {
+		alert(this.refs.username.value);
+	}
+
 	checkFree() {
 		let free = this.props.free;
 		if (free)
@@ -29,6 +33,15 @@ class Course extends Component {
 								<a onClick={() => this.handleClick2("Hello World!")} className="btn btn-danger" href="#" role="button">View 2</a>
 								<a onClick={this.handleClick3} className="btn btn-warning" href="#" role="button">View 3</a>
 							</div>
+		else 
+			return (
+				<div className="input-group mb-3">
+				  <input type="text" className="form-control" placeholder="Recipient's username" ref="username"/>
+				  <div className="input-group-append">
+				    <button onClick={this.handleRegister} className="btn btn-outline-secondary" type="button">Button</button>
+				  </div>
+				</div>
+			)
 	}
   render() {
     return (
