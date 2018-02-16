@@ -11,6 +11,7 @@ export default class List extends Component {
   }
 
   render() {
+    console.log(this.props.Items);
     const Elem = this.props.Items.map((item, index) => {
       return (
         <Item key={index} />
