@@ -2,7 +2,21 @@ import React, { Component } from 'react';
 import Item from './Item'
 
 export default class List extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { 
+
+    };
+  }
+
   render() {
+    const Elem = this.props.Items.map((item, index) => {
+      return (
+        <Item key={index} />
+      );
+    });
+
     return (
       <div className="row">
         <table className="table table-hover">
@@ -15,7 +29,7 @@ export default class List extends Component {
             </tr>
           </thead>
           <tbody>
-            <Item />
+            {Elem}
           </tbody>
         </table>
       </div>
