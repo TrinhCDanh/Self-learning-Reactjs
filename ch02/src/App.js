@@ -13,20 +13,33 @@ class App extends Component {
     super(props);
 
     this.state = {
-      Items: Items
+      Items: Items, 
+      isShowForm: false
     };
+
+    this.handleShowForm = this.handleShowForm.bind(this);
+  }
+
+  handleShowForm() {
+    this.setState({
+      isShowForm: !this.state.isShowForm
+    });
   }
 
   render() {
     let Items = this.state.Items;
+    let isShowForm  = this.state.isShowForm;
+
+    if(isShowForm) 
+      var elemForm = <Form />;
 
     return (
       <div className="container">
         <Title />
 
-        <Control />
+        <Control handleClickForm={this.handleShowForm} />
         
-        <Form />
+        {elemForm}
         
         <List Items={Items}/>
       </div>
