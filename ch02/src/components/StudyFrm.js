@@ -7,7 +7,8 @@ export default class StudyFrm extends Component {
     this.state = {
       fullName: '',
       course: 'angular',
-      optradio: 'opt1'
+      optradio: 'opt1',
+      chk1: true
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -16,7 +17,7 @@ export default class StudyFrm extends Component {
 
   handleChange(event) {
     const target = event.target;
-    const value = target.value;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
     this.setState({
@@ -48,7 +49,7 @@ export default class StudyFrm extends Component {
           <div className="form-group">
             <div className="form-check">
               <label className="form-check-label">
-                <input type="checkbox" className="form-check-input" defaultValue />Option 1
+                <input onChange={this.handleChange} checked={this.state.chk1} name="chk1" type="checkbox" className="form-check-input" defaultValue />Option 1
               </label>
             </div>
             <div className="form-check">
