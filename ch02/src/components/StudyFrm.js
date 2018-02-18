@@ -5,7 +5,9 @@ export default class StudyFrm extends Component {
     super(props);
 
     this.state = {
-      fullName: 'fdgdfg'
+      fullName: '',
+      course: 'angular',
+      optradio: 'opt1'
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -13,13 +15,17 @@ export default class StudyFrm extends Component {
   }
 
   handleChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
     this.setState({
-      fullName: event.target.value
+      [name]: value
     });
   }
 
   handleSubmit(event) {
-    alert(this.state.fullName);
+    console.log(this.state);
     event.preventDefault(); // ko cho load lai trang
   }
 
@@ -29,13 +35,14 @@ export default class StudyFrm extends Component {
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label htmlFor="usr">Name:</label>
-            <input value={this.state.fullName} onChange={this.handleChange} type="text" className="form-control" />
+            <input value={this.state.fullName} onChange={this.handleChange} name="fullName" type="text" className="form-control" />
           </div>
           <div className="form-group">
             <label htmlFor="sel1">Khoa hoc:</label>
-            <select className="form-control" id="sel1">
-              <option>Angular</option>
-              <option>React</option>
+            <select value={this.state.course} onChange={this.handleChange} name="course" className="form-control" id="sel1">
+              <option value="angular">Angular</option>
+              <option value="react">React</option>
+              <option value="nodejs">Nodejs</option>
             </select>
           </div>
           <div className="form-group">
@@ -57,13 +64,13 @@ export default class StudyFrm extends Component {
           </div>
           <div className="form-group">
             <div className="radio">
-              <label><input type="radio" name="optradio" />Option 1</label>
+              <label><input onChange={this.handleChange} checked={this.state.optradio === 'opt1'} value='opt1' type="radio" name="optradio" />Option 1</label>
             </div>
             <div className="radio">
-              <label><input type="radio" name="optradio" />Option 2</label>
+              <label><input onChange={this.handleChange} checked={this.state.optradio === 'opt2'} value='opt2' type="radio" name="optradio" />Option 2</label>
             </div>
             <div className="radio disabled">
-              <label><input type="radio" name="optradio" />Option 3</label>
+              <label><input onChange={this.handleChange} checked={this.state.optradio === 'opt3'} value='opt3' type="radio" name="optradio" />Option 3</label>
             </div>
           </div>
           <div className="form-group row">
