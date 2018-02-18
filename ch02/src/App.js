@@ -14,10 +14,12 @@ class App extends Component {
 
     this.state = {
       Items: Items,
-      isShowForm: false
+      isShowForm: false,
+      strSearch: ''
     };
 
     this.handleShowForm = this.handleShowForm.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   handleShowForm() {
@@ -26,7 +28,14 @@ class App extends Component {
     });
   }
 
+  handleSearch(value) {
+    this.setState({
+      strSearch: value
+    });
+  }
+
   render() {
+    console.log(this.state.strSearch);
     let Items = this.state.Items;
     let isShowForm  = this.state.isShowForm;
 
@@ -37,7 +46,11 @@ class App extends Component {
       <div className="container">
         <Title />
 
-        <Control handleClickForm={this.handleShowForm} isCloseForm={isShowForm} />
+        <Control
+          handleClickForm ={this.handleShowForm}
+          isCloseForm     ={isShowForm}
+          clickGo         ={this.handleSearch}
+        />
 
         {elemForm}
 

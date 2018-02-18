@@ -4,13 +4,13 @@ import Sort from './Sort';
 
 export default class Control extends Component {
   render() {
-    console.log(this.props.isCloseForm);
+    //console.log(this.props.isCloseForm);
     let elemClose = {btn: "btn btn-info btn-block", content: "Add Task"};
     if (this.props.isCloseForm)
       elemClose = {btn: "btn btn-block btn-success", content: "Close Task"};
     return (
       <div className="row">
-        <Search />
+        <Search clickGo={this.props.clickGo} />
 
         <Sort/>
 
