@@ -9,10 +9,10 @@ export default class Sort extends Component {
             Dropdown
           </button>
           <div className="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <a className="dropdown-item" href="#">Name ASC</a>
-            <a className="dropdown-item" href="#">Name DESC</a>
-            <a className="dropdown-item" href="#">Level ASC</a>
-            <a className="dropdown-item" href="#">Level DESC</a>
+            <a className="dropdown-item">Name ASC</a>
+            <a className="dropdown-item">Name DESC</a>
+            <a className="dropdown-item">Level ASC</a>
+            <a className="dropdown-item">Level DESC</a>
           </div>
           <span className="badge badge-success" style={{fontSize: 20, padding: 5}}>Name DESC</span>
         </div>

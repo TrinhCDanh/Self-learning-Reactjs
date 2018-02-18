@@ -31,7 +31,7 @@ class App extends Component {
     let isShowForm  = this.state.isShowForm;
 
     if(isShowForm)
-      var elemForm = <Form />;
+      var elemForm = <Form handleCancel={this.handleShowForm} />;
 
     return (
       <div className="container">
