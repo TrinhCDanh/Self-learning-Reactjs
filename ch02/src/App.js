@@ -8,6 +8,7 @@ import Items from './mocks/tasks';
 import {filter, includes, orderBy as funcOrderBy, remove} from 'lodash';
 //import logo from './logo.svg';
 //import './App.css';
+const uuidv4 = require('uuid/v4');
 
 class App extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class App extends Component {
     this.handleSearch   = this.handleSearch.bind(this);
     this.handleSort   = this.handleSort.bind(this);
     this.handleDelete   = this.handleDelete.bind(this);
+    this.handleSubmit   = this.handleSubmit.bind(this);
   }
 
   handleShowForm() {
@@ -57,6 +59,23 @@ class App extends Component {
     });
   }
 
+  handleSubmit(itemadd) {
+    console.log(itemadd);
+    let {Items} = this.state;
+
+    Items.push({
+      id: uuidv4(),
+      name: itemadd.name,
+      level: +itemadd.level
+    });
+
+    this.setState({
+      Items: Items,
+      isShowForm: false
+    });
+
+  }
+
   render() {
 
     let {orderBy, orderDir, isShowForm, strSearch} = this.state;
@@ -70,7 +89,7 @@ class App extends Component {
     Items = funcOrderBy(Items, [orderBy], [orderDir]);
 
     if(isShowForm)
-      var elemForm = <Form handleCancel={this.handleShowForm} />;
+      var elemForm = <Form handleCancel={this.handleShowForm} handleSubmit={this.handleSubmit} />;
 
     return (
       <div className="container">
