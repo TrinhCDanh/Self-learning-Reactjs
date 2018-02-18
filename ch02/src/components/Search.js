@@ -5,8 +5,8 @@ export default class Search extends Component {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
-    this.handeSearch = this.handeSearch.bind(this);
-    this.handeClear = this.handeClear.bind(this);
+    this.handeSearch  = this.handeSearch.bind(this);
+    this.handeClear   = this.handeClear.bind(this);
 
     this.state = {
       strSearch: ''
