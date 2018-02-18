@@ -19,6 +19,10 @@ export default class Item extends Component {
       return {badge: "badge badge-danger", diff: "High"};
   }
 
+  handleDelete(id) {
+    this.props.handleDelete(id);
+  }
+
   render() {
     const {taskname} = this.props;
     const {index} = this.props;
@@ -34,7 +38,7 @@ export default class Item extends Component {
         <td className="text-center"><span className={result_level.badge}>{result_level.diff}</span></td>
         <td>
           <button type="button" className="btn btn-warning">Edit</button>
-          <button type="button" className="btn btn-danger">Delete</button>
+          <button onClick={() => this.handleDelete(this.props.id)} type="button" className="btn btn-danger">Delete</button>
         </td>
       </tr>
 

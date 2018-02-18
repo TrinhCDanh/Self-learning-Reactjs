@@ -5,7 +5,7 @@ import Form from './components/Form';
 import List from './components/List';
 
 import Items from './mocks/tasks';
-import {filter, includes, orderBy as funcOrderBy} from 'lodash';
+import {filter, includes, orderBy as funcOrderBy, remove} from 'lodash';
 //import logo from './logo.svg';
 //import './App.css';
 
@@ -24,6 +24,7 @@ class App extends Component {
     this.handleShowForm = this.handleShowForm.bind(this);
     this.handleSearch   = this.handleSearch.bind(this);
     this.handleSort   = this.handleSort.bind(this);
+    this.handleDelete   = this.handleDelete.bind(this);
   }
 
   handleShowForm() {
@@ -42,6 +43,17 @@ class App extends Component {
     this.setState({
       orderBy : orderBy,
       orderDir: orderDir
+    });
+  }
+
+  handleDelete(id) {
+    console.log(id);
+    let items = this.state.Items;
+    remove(items, (item) => {
+      return item.id === id;
+    });
+    this.setState({
+      Items: items
     });
   }
 
@@ -75,7 +87,7 @@ class App extends Component {
 
         {elemForm}
 
-        <List Items={Items}/>
+        <List Items={Items} handleDelete={this.handleDelete} />
       </div>
     );
   }

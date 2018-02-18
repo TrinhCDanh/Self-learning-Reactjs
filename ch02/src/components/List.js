@@ -14,7 +14,14 @@ export default class List extends Component {
     //console.log(this.props.Items);
     const Elem = this.props.Items.map((item, index) => {
       return (
-        <Item key={index} taskname={item.name} index={index} level={item.level} />
+        <Item
+          key      = {index}
+          taskname = {item.name}
+          index    = {index}
+          level    = {item.level}
+          id       = {item.id}
+          handleDelete={this.props.handleDelete}
+        />
       );
     });
 
