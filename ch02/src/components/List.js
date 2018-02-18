@@ -5,13 +5,13 @@ export default class List extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { 
+    this.state = {
 
     };
   }
 
   render() {
-    console.log(this.props.Items);
+    //console.log(this.props.Items);
     const Elem = this.props.Items.map((item, index) => {
       return (
         <Item key={index} taskname={item.name} index={index} level={item.level} />

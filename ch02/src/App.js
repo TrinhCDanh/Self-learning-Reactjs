@@ -13,7 +13,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      Items: Items, 
+      Items: Items,
       isShowForm: false
     };
 
@@ -30,17 +30,17 @@ class App extends Component {
     let Items = this.state.Items;
     let isShowForm  = this.state.isShowForm;
 
-    if(isShowForm) 
+    if(isShowForm)
       var elemForm = <Form />;
 
     return (
       <div className="container">
         <Title />
 
-        <Control handleClickForm={this.handleShowForm} />
-        
+        <Control handleClickForm={this.handleShowForm} isCloseForm={isShowForm} />
+
         {elemForm}
-        
+
         <List Items={Items}/>
       </div>
     );
