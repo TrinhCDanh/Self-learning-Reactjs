@@ -5,7 +5,7 @@ import Form from './components/Form';
 import List from './components/List';
 
 import Items from './mocks/tasks';
-import {filter, includes} from 'lodash';
+import {filter, includes, orderBy as funcOrderBy} from 'lodash';
 //import logo from './logo.svg';
 //import './App.css';
 
@@ -14,13 +14,16 @@ class App extends Component {
     super(props);
 
     this.state = {
-      Items: Items,
+      Items     : Items,
       isShowForm: false,
-      strSearch: ''
+      strSearch : '',
+      orderBy   : 'name',
+      orderDir   : 'asc'
     };
 
     this.handleShowForm = this.handleShowForm.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
+    this.handleSearch   = this.handleSearch.bind(this);
+    this.handleSort   = this.handleSort.bind(this);
   }
 
   handleShowForm() {
@@ -35,18 +38,24 @@ class App extends Component {
     });
   }
 
-  render() {
-    //console.log(this.state.strSearch);
-    let ItemsOrigin = [...this.state.Items];
-    let isShowForm  = this.state.isShowForm;
-    let keySearch   = this.state.strSearch;
-    let Items       = [];
-
-    Items = filter(ItemsOrigin, (index) => {
-      return includes(index.name.toLowerCase(), keySearch);
+  handleSort(orderBy, orderDir) {
+    this.setState({
+      orderBy : orderBy,
+      orderDir: orderDir
     });
+  }
 
+  render() {
 
+    let {orderBy, orderDir, isShowForm, strSearch} = this.state;
+    let ItemsOrigin = [...this.state.Items];
+    let Items       = [];
+    // Search
+    Items = filter(ItemsOrigin, (index) => {
+      return includes(index.name.toLowerCase(), strSearch);
+    });
+    // Sort
+    Items = funcOrderBy(Items, [orderBy], [orderDir]);
 
     if(isShowForm)
       var elemForm = <Form handleCancel={this.handleShowForm} />;
@@ -56,7 +65,10 @@ class App extends Component {
         <Title />
 
         <Control
+          orderBy         = {orderBy}
+          orderDir        = {orderDir}
           handleClickForm = {this.handleShowForm}
+          handleSort      = {this.handleSort}
           isCloseForm     = {isShowForm}
           clickGo         = {this.handleSearch}
         />
