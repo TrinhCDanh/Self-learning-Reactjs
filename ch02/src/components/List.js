@@ -20,7 +20,9 @@ export default class List extends Component {
           index    = {index}
           level    = {item.level}
           id       = {item.id}
+          item = {item}
           handleDelete={this.props.handleDelete}
+          handleEdit={this.props.handleEdit}
         />
       );
     });

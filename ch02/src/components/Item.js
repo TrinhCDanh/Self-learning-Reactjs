@@ -9,6 +9,10 @@ export default class Item extends Component {
     };
   }
 
+  handleEdit(item) {
+    this.props.handleEdit(item);
+  }
+
   // Cách khác trong video 30 của ZendVN
   showLevel(level) {
     if (level === 0)
@@ -27,7 +31,9 @@ export default class Item extends Component {
     const {taskname} = this.props;
     const {index} = this.props;
     const level = this.props.level;
+    const {item} = this.props;
 
+    //console.log(this.props.item);
     let result_level = this.showLevel(level);
    // console.log(result_level);
 
@@ -37,7 +43,7 @@ export default class Item extends Component {
         <td>{taskname}</td>
         <td className="text-center"><span className={result_level.badge}>{result_level.diff}</span></td>
         <td>
-          <button type="button" className="btn btn-warning">Edit</button>
+          <button onClick={() => this.handleEdit(item)} type="button" className="btn btn-warning">Edit</button>
           <button onClick={() => this.handleDelete(this.props.id)} type="button" className="btn btn-danger">Delete</button>
         </td>
       </tr>

@@ -5,12 +5,35 @@ export default class Form extends Component {
     super(props);
 
     this.state = {
+      task_id: '',
       task_name: '',
       task_level: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillMount() {
+    let item = this.props.isSelectItem;
+    if (item !== null) {
+      this.setState({
+        task_id: item.id,
+        task_name: item.name,
+        task_level: item.level
+      });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let item = nextProps.isSelectItem;
+    if (item !== null) {
+      this.setState({
+        task_id: item.id,
+        task_name: item.name,
+        task_level: item.level
+      });
+    }
   }
 
   handleChange(event) {
@@ -25,6 +48,7 @@ export default class Form extends Component {
 
   handleSubmit(event) {
     let itemadd = {
+      id: this.state.task_id,
       name: this.state.task_name,
       level: this.state.task_level
     }
@@ -33,6 +57,7 @@ export default class Form extends Component {
   }
 
   render() {
+
     return (
       <div className="row">
         <div className="col-md-12">

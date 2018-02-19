@@ -5,7 +5,7 @@ import Form from './components/Form';
 import List from './components/List';
 
 import Items from './mocks/tasks';
-import {filter, includes, orderBy as funcOrderBy, remove} from 'lodash';
+import {filter, includes, orderBy as funcOrderBy, remove, reject} from 'lodash';
 //import logo from './logo.svg';
 //import './App.css';
 const uuidv4 = require('uuid/v4');
@@ -15,23 +15,26 @@ class App extends Component {
     super(props);
 
     this.state = {
-      Items     : Items,
-      isShowForm: false,
-      strSearch : '',
-      orderBy   : 'name',
-      orderDir   : 'asc'
+      Items       : Items,
+      isShowForm  : false,
+      strSearch   : '',
+      orderBy     : 'name',
+      orderDir    : 'asc',
+      isSelectItem: null
     };
 
     this.handleShowForm = this.handleShowForm.bind(this);
     this.handleSearch   = this.handleSearch.bind(this);
-    this.handleSort   = this.handleSort.bind(this);
+    this.handleSort     = this.handleSort.bind(this);
     this.handleDelete   = this.handleDelete.bind(this);
     this.handleSubmit   = this.handleSubmit.bind(this);
+    this.handleEdit     = this.handleEdit.bind(this);
   }
 
   handleShowForm() {
     this.setState({
-      isShowForm: !this.state.isShowForm
+      isShowForm: !this.state.isShowForm,
+      isSelectItem: null
     });
   }
 
@@ -59,21 +62,35 @@ class App extends Component {
     });
   }
 
-  handleSubmit(itemadd) {
-    console.log(itemadd);
+  handleSubmit(item) {
     let {Items} = this.state;
+    let id = null;
+
+    if(item.id !== '') {
+      console.log(123);
+      Items = reject(Items, {id: item.id});
+      id = item.id;
+    } else {
+      id = uuidv4();
+    }
 
     Items.push({
-      id: uuidv4(),
-      name: itemadd.name,
-      level: +itemadd.level
+      id: id,
+      name: item.name,
+      level: +item.level
     });
 
     this.setState({
       Items: Items,
       isShowForm: false
     });
+  }
 
+  handleEdit(item) {
+    this.setState({
+      isSelectItem: item,
+      isShowForm: true
+    });
   }
 
   render() {
@@ -89,7 +106,11 @@ class App extends Component {
     Items = funcOrderBy(Items, [orderBy], [orderDir]);
 
     if(isShowForm)
-      var elemForm = <Form handleCancel={this.handleShowForm} handleSubmit={this.handleSubmit} />;
+      var elemForm =  <Form
+                        handleCancel={this.handleShowForm}
+                        handleSubmit={this.handleSubmit}
+                        isSelectItem={this.state.isSelectItem}
+                      />;
 
     return (
       <div className="container">
@@ -106,7 +127,11 @@ class App extends Component {
 
         {elemForm}
 
-        <List Items={Items} handleDelete={this.handleDelete} />
+        <List
+          Items={Items}
+          handleDelete={this.handleDelete}
+          handleEdit={this.handleEdit}
+        />
       </div>
     );
   }
