@@ -15,7 +15,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      Items       : Items,
+      Items       : [],
       isShowForm  : false,
       strSearch   : '',
       orderBy     : 'name',
@@ -31,9 +31,16 @@ class App extends Component {
     this.handleEdit     = this.handleEdit.bind(this);
   }
 
+  componentWillMount() {
+    let items = JSON.parse(localStorage.getItem("task"));
+    this.setState({
+      Items: items
+    });
+  }
+
   handleShowForm() {
     this.setState({
-      isShowForm: !this.state.isShowForm,
+      isShowForm  : !this.state.isShowForm,
       isSelectItem: null
     });
   }
@@ -60,36 +67,39 @@ class App extends Component {
     this.setState({
       Items: items
     });
+
+    localStorage.setItem("task", JSON.stringify(items));
   }
 
   handleSubmit(item) {
     let {Items} = this.state;
-    let id = null;
+    let id      = null;
 
     if(item.id !== '') {
-      console.log(123);
       Items = reject(Items, {id: item.id});
-      id = item.id;
+      id    = item.id;
     } else {
       id = uuidv4();
     }
 
     Items.push({
-      id: id,
-      name: item.name,
+      id   : id,
+      name : item.name,
       level: +item.level
     });
 
     this.setState({
-      Items: Items,
+      Items     : Items,
       isShowForm: false
     });
+
+    localStorage.setItem("task", JSON.stringify(Items));
   }
 
   handleEdit(item) {
     this.setState({
       isSelectItem: item,
-      isShowForm: true
+      isShowForm  : true
     });
   }
 
@@ -128,9 +138,9 @@ class App extends Component {
         {elemForm}
 
         <List
-          Items={Items}
-          handleDelete={this.handleDelete}
-          handleEdit={this.handleEdit}
+          Items        = {Items}
+          handleDelete = {this.handleDelete}
+          handleEdit   = {this.handleEdit}
         />
       </div>
     );
