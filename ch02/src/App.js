@@ -23,7 +23,7 @@ class App extends Component {
       isSelectItem: null
     };
 
-    this.handleShowForm = this.handleShowForm.bind(this);
+    //this.handleShowForm = this.handleShowForm.bind(this);
     this.handleSearch   = this.handleSearch.bind(this);
     this.handleSort     = this.handleSort.bind(this);
     this.handleDelete   = this.handleDelete.bind(this);
@@ -32,13 +32,13 @@ class App extends Component {
   }
 
   componentWillMount() {
-    let items = JSON.parse(localStorage.getItem("task"));
+    let items = JSON.parse(localStorage.getItem("task")) || [];
     this.setState({
       Items: items
     });
   }
 
-  handleShowForm() {
+  handleShowForm = () => {
     this.setState({
       isShowForm  : !this.state.isShowForm,
       isSelectItem: null
@@ -106,7 +106,7 @@ class App extends Component {
   render() {
 
     let {orderBy, orderDir, isShowForm, strSearch} = this.state;
-    let ItemsOrigin = [...this.state.Items];
+    let ItemsOrigin = (this.state.Items !== null ) ? [...this.state.Items] : [];
     let Items       = [];
     // Search
     Items = filter(ItemsOrigin, (index) => {

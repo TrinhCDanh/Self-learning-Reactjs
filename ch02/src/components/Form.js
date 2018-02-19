@@ -15,18 +15,14 @@ export default class Form extends Component {
   }
 
   componentWillMount() {
-    let item = this.props.isSelectItem;
-    if (item !== null) {
-      this.setState({
-        task_id: item.id,
-        task_name: item.name,
-        task_level: item.level
-      });
-    }
+    this.updateItem(this.props.isSelectItem);
   }
 
   componentWillReceiveProps(nextProps) {
-    let item = nextProps.isSelectItem;
+    this.updateItem(nextProps.isSelectItem);
+  }
+
+  updateItem(item) {
     if (item !== null) {
       this.setState({
         task_id: item.id,
