@@ -32,7 +32,7 @@ export default class Search extends Component {
         <div className="input-group">
           <input value={this.state.strSearch} onChange={this.handleChange} type="text" className="form-control" ref="search" placeholder="Search for..." />
           <span className="input-group-btn">
-            <button onClick={this.handeSearch} className="btn btn-info" type="button">Go!</button>
+            <button onClick={this.handeSearch} className="btn btn-info" type="button">Go!!!</button>
             <button onClick={this.handeClear} className="btn btn-warning" type="button">Clear</button>
           </span>
         </div>
