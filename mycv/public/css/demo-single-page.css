@@ -1,0 +1,178 @@
+*, *:after, *:before { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+
+/* Clearfix hack by Nicolas Gallagher: http://nicolasgallagher.com/micro-clearfix-hack/ */
+.clearfix:before, .clearfix:after { content: " "; display: table; }
+.clearfix:after { clear: both; }
+::-webkit-scrollbar {
+    width:5px; 
+    height:5px; 
+}
+::-webkit-scrollbar-track {
+    background-color: rgba(0,0,0,0.5);
+    width: 1px;
+}
+    
+::-webkit-scrollbar-thumb {
+    background: tomato;
+    border-radius: 100px; }
+
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    overflow: hidden;
+    
+}
+
+.pt-wrapper {
+    width: 100%;
+    height: 100%;
+    margin-left: 100px;
+    position: relative;
+    -webkit-perspective: 1200px;
+    -moz-perspective: 1200px;
+    perspective: 1200px;
+    transition: margin-left 0.25s;
+}
+
+.pt-page {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+    visibility: hidden;
+    overflow-x: hidden;
+    padding: 10px;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    
+}
+.next-page {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);  
+}
+.pt-page-current, .no-js .pt-page {
+    visibility: visible;
+    z-index: 1;
+}
+
+.no-js body {
+    overflow: auto;
+}
+
+.pt-trigger-container {
+    position: relative;
+    z-index: 999999;
+    left: -100px;
+    top: 0;
+    background-color: gold;
+    width: 100px;
+    height: 100%;
+    /*overflow-y: auto;
+    overflow-x: hidden;*/
+    transition: all 0.5s;
+}
+.pt-trigger-content {
+    width: 100px;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.pt-show-trigger {
+    position: absolute;
+    top: 0;
+    left: 100px;
+}
+.pt-trigger {
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    display: block;
+    font-family: Calibri;
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-flow: wrap;
+}
+.pt-trigger > * {
+    flex: 100%;
+}
+.pt-trigger i {
+    font-size: 35px;
+}
+.pt-trigger p {
+    margin: 0;
+}
+
+/* Page Styles */
+.pt-page-ontop {
+    z-index: 999;
+}
+
+/*.pt-page h1 {
+    position: absolute;
+    font-weight: 300;
+    font-size: 4.4em;
+    line-height: 1;
+    letter-spacing: 6px;
+    margin: 0;
+    top: 1%;
+    width: 100%;
+    text-align: center;
+    word-spacing: -0.3em;
+}*/
+
+.pt-page-1 {
+    background: #fff;
+}
+
+.pt-page {
+    background: #fff;
+    color: #fff;
+}
+
+
+/*No Animation Support Message Style*/
+.pt-message {
+    display: none;
+    position: absolute;
+    z-index: 99999;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #da475c;
+    color: #fff;
+    text-align: center;
+}
+
+.pt-message p {
+    margin: 0;
+    line-height: 60px;
+    font-size: 26px;
+}
+
+.no-cssanimations .pt-message {
+    display: block;
+}
+
+@media only screen and (max-width: 730px) {
+    .pt-trigger-container {
+        left: -100px;
+    }
+    .pt-wrapper {
+        margin-left: 0;
+    }
+}

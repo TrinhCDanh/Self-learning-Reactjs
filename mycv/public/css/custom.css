@@ -1,0 +1,9 @@
+.pt-show-trigger {
+    opacity: 0;
+    transition: 0.1s;
+}
+@media only screen and (max-width: 730px) {
+    .pt-show-trigger {
+        opacity: 1;
+    }
+}
