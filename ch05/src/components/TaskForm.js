@@ -10,6 +10,29 @@ export default class TaskForm extends Component {
         };
     }
 
+    componentWillMount() {
+        this.nextUpdateItem(this.props.taskedit);
+    }
+    componentWillReceiveProps(nextProps) {
+        this.nextUpdateItem(nextProps.taskedit);
+        if(!nextProps.taskedit) {
+            this.setState({
+                id: '',
+                name: '',
+                status: false
+            });
+        }
+    }
+    nextUpdateItem = (item) => {
+        if(item !== null) {
+            this.setState({
+                id: item.id,
+                name: item.name,
+                status: item.status       
+            });  
+        }
+    }
+    
     onChange = (event) => {
         var target = event.target;
         var name = target.name;
@@ -40,7 +63,7 @@ export default class TaskForm extends Component {
             <div className="panel panel-warning">
                 <div className="panel-heading">
                     <h3 className="panel-title">
-                        Thêm Công Việc
+                        {this.props.taskedit ? 'Cập Nhật Công Việc' : 'Thêm Công Việc'}
                         <span className="fa fa-times-circle text-right"
                             onClick={this.props.onCloseFrm}
                         ></span>
@@ -65,8 +88,8 @@ export default class TaskForm extends Component {
                             </select>
                         <br />
                         <div className="text-center">
-                        <button type="submit" className="btn btn-warning">Thêm</button>&nbsp;
-                        <button type="button" className="btn btn-danger" onClick={this.onClear}>Hủy Bỏ</button>
+                        <button type="submit" className="btn btn-warning">Save</button>&nbsp;
+                        <button type="button" className="btn btn-danger" onClick={this.onClear}>Cancel</button>
                         </div>
                     </form>
                 </div>

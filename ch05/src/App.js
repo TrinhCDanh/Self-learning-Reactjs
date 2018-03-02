@@ -10,7 +10,13 @@ class App extends Component {
     super(props);
     this.state = {
       tasks: [],
-      isDisplayFrm: false
+      isDisplayFrm: false,
+      isEditing: null,
+      filters: {
+        name: '',
+        status: -1
+      },
+      strSearch: ''
     };
   }
 
@@ -21,32 +27,6 @@ class App extends Component {
         tasks: tasks
       });
     }
-  }
-
-  onGeneralAdd = () => {
-    var tasks = [
-      {
-        id: this.createId(),
-        name: 'React',
-        status: true
-      },
-      {
-        id: this.createId(),
-        name: 'Nodejs',
-        status: false
-      },
-      {
-        id: this.createId(),
-        name: 'MongoDB',
-        status: true
-      }
-    ];
-
-    this.setState({
-      tasks: tasks
-    });
-
-    localStorage.setItem('tasks', JSON.stringify(tasks) );
   }
 
   s4 = () => {
@@ -61,15 +41,30 @@ class App extends Component {
   }
 
   onToggleFrm = () => {
-    this.setState({
-      isDisplayFrm: !this.state.isDisplayFrm
-    });
+    if(this.state.isEditing !== null) {
+      this.setState({
+        isDisplayFrm: true,
+        isEditing: null
+      });
+    } else {
+      this.setState({
+        isDisplayFrm: !this.state.isDisplayFrm,
+        isEditing: null
+      });
+    }
+    
   }
 
   onSubmit = (data) => {
+    // data = {id, name, status}
     var {tasks} = this.state;
-    data.id = this.createId();
-    tasks.push(data);
+    if(data.id !== '') {
+      var index = findIndex(tasks, {id: data.id});
+      tasks[index] = data;
+    } else {
+      data.id = this.createId();
+      tasks.push(data);
+    }
     this.setState({
       tasks: tasks
     });
@@ -98,9 +93,60 @@ class App extends Component {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }
 
+  onUpdate = (id) => {
+    var {tasks} = this.state;
+    var index = findIndex(tasks, {id: id});
+    var isEditing = tasks[index];
+    this.setState({
+      isEditing: isEditing,
+      isDisplayFrm: true,
+    });
+  }
+
+  onFilter = (filterName, filterStatus) => {
+    filterStatus = parseInt(filterStatus, 10);
+    this.setState({
+      filters: {
+        name: filterName.toLowerCase(),
+        status: filterStatus
+      }
+    });
+  }
+
+  onSearch = (strKey) => {
+    console.log(strKey);
+    this.setState({
+      strSearch: strKey.toLowerCase()
+    });
+    console.log(this.state.strSearch);
+  }
+
   render() {
-    let {tasks, isDisplayFrm} = this.state;
-    let showFrm = isDisplayFrm ? <TaskForm onCloseFrm={this.onToggleFrm} onSubmit={this.onSubmit} /> : '' ;
+    let {tasks, isDisplayFrm, filters, strSearch} = this.state;
+    
+    if(filters) {
+      tasks = filter(tasks, (index) => {
+        return includes(index.name.toLowerCase(), filters.name);
+      });
+      tasks = filter(tasks, (index) => {
+        if (filters.status === -1)
+          return index;
+        else
+          return index.status === (filters.status === 1 ? true : false);
+      });
+    }
+    if(strSearch !== '') {
+      tasks = filter(tasks, (index) => {
+        return includes(index.name.toLowerCase(), strSearch);
+      });
+    }
+    
+
+    let showFrm = isDisplayFrm ?  <TaskForm 
+                                    onCloseFrm={this.onToggleFrm} 
+                                    onSubmit={this.onSubmit}
+                                    taskedit={this.state.isEditing}
+                                  /> : '' ;
 
     return (
       <div className="container">
@@ -116,16 +162,15 @@ class App extends Component {
             <button type="button" className="btn btn-primary" onClick={this.onToggleFrm} >
               <span className="fa fa-plus mr-5" />Thêm Công Việc
             </button>
-            <button type="button" className="btn btn-danger" onClick={this.onGeneralAdd} >
-              General Add
-            </button>
-            <Control />
+            <Control onSearch={this.onSearch} />
             <div className="row mt-15">
               <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <TaskList 
                   tasks={tasks} 
                   onUpdateStatus={this.onUpdateStatus}
-                  onDelete={this.onDelete} 
+                  onDelete={this.onDelete}
+                  onUpdate={this.onUpdate}
+                  onFilter={this.onFilter} 
                 />
               </div>
             </div>

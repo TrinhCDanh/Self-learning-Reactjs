@@ -1,9 +1,40 @@
 .pt-show-trigger {
     opacity: 0;
-    transition: 0.1s;
+    transition: 0.25s;
 }
+
 @media only screen and (max-width: 730px) {
     .pt-show-trigger {
         opacity: 1;
     }
+    .open-nav {
+        left: 0;
+    }
+}
+
+/* Home Page */
+.intro-name {
+    position: absolute;
+    bottom: 30%;
+    left: 0;
+    width: 100%;
+    color: white;
+}
+#myVideo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    /* width: 100%;
+    height: 100%; */
+}
+#myVideo::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: gold;
+    z-index: 1;
 }
