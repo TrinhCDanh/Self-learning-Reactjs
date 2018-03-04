@@ -4,6 +4,7 @@ import TaskForm from './components/TaskForm';
 import Control from './components/Control';
 import TaskList from './components/TaskList';
 import {filter, includes, orderBy as funcOrderBy, remove, findIndex} from 'lodash';
+import demo from './training/demo'
 
 class App extends Component {
   constructor(props) {
