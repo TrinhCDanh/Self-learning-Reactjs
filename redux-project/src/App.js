@@ -4,12 +4,13 @@ import TaskForm from './components/TaskForm';
 import Control from './components/Control';
 import TaskList from './components/TaskList';
 import {filter, includes, orderBy as funcOrderBy, remove, findIndex} from 'lodash';
+import { connect } from 'react-redux';
+import * as actions from './actions/index';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDisplayFrm: false,
       isEditing: null,
       filters: {
         name: '',
@@ -22,35 +23,7 @@ class App extends Component {
   }
 
   onToggleFrm = () => {
-    if(this.state.isEditing !== null) {
-      this.setState({
-        isDisplayFrm: true,
-        isEditing: null
-      });
-    } else {
-      this.setState({
-        isDisplayFrm: !this.state.isDisplayFrm,
-        isEditing: null
-      });
-    }
-    
-  }
-
-  onSubmit = (data) => {
-    // data = {id, name, status}
-    var {tasks} = this.state;
-    if(data.id !== '') {
-      var index = findIndex(tasks, {id: data.id});
-      tasks[index] = data;
-    } else {
-      data.id = this.createId();
-      tasks.push(data);
-    }
-    this.setState({
-      tasks: tasks
-    });
-    localStorage.setItem('tasks', JSON.stringify(tasks) );
-
+    this.props.onToggleFrm();
   }
 
   onUpdateStatus = (id) => {
@@ -110,8 +83,9 @@ class App extends Component {
   }
 
   render() {
-    let {isDisplayFrm, filters, strSearch, sortBy, sortDir} = this.state;
-    
+    let {filters, strSearch, sortBy, sortDir} = this.state;
+    var { isDisplayFrm } = this.props;
+
     // if(filters) {
     //   tasks = filter(tasks, (index) => {
     //     return includes(index.name.toLowerCase(), filters.name);
@@ -132,8 +106,6 @@ class App extends Component {
     // tasks = funcOrderBy(tasks, [sortBy], [sortDir]);
 
     let showFrm = isDisplayFrm ?  <TaskForm 
-                                    onCloseFrm={this.onToggleFrm} 
-                                    onSubmit={this.onSubmit}
                                     taskedit={this.state.isEditing}
                                   /> : '' ;
 
@@ -169,4 +141,19 @@ class App extends Component {
   }
 }
 
-export default App;
+// state là của store
+const mapStateToProps = (state) => {
+  return {
+    isDisplayFrm: state.isDisplayFrm
+  }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    onToggleFrm: () => {
+      dispatch(actions.ToggleForm());
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

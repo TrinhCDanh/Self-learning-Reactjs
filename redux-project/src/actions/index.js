@@ -12,3 +12,21 @@ export const AddTask = (task) => {
         task
     }
 };
+
+export const ToggleForm = () => {
+    return {
+        type: types.TOGGLE_FORM,
+    }
+};
+
+export const CloseForm = () => {
+    return {
+        type: types.CLOSE_FORM,
+    }
+};
+
+export const OpenForm = () => {
+    return {
+        type: types.OPEN_FORM,
+    }
+};
