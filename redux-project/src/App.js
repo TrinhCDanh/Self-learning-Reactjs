@@ -9,7 +9,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: [],
       isDisplayFrm: false,
       isEditing: null,
       filters: {
@@ -20,26 +19,6 @@ class App extends Component {
       sortBy: 'name',
       sortDir: 'asc'
     };
-  }
-
-  componentWillMount() {
-    if(localStorage && localStorage.getItem('tasks')) {
-      var tasks = JSON.parse(localStorage.getItem('tasks'));
-      this.setState({
-        tasks: tasks
-      });
-    }
-  }
-
-  s4 = () => {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-
-  createId() {
-    return this.s4() + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' +
-    this.s4() + '-' + this.s4() + this.s4() + this.s4();
   }
 
   onToggleFrm = () => {
@@ -131,26 +110,26 @@ class App extends Component {
   }
 
   render() {
-    let {tasks, isDisplayFrm, filters, strSearch, sortBy, sortDir} = this.state;
+    let {isDisplayFrm, filters, strSearch, sortBy, sortDir} = this.state;
     
-    if(filters) {
-      tasks = filter(tasks, (index) => {
-        return includes(index.name.toLowerCase(), filters.name);
-      });
-      tasks = filter(tasks, (index) => {
-        if (filters.status === -1)
-          return index;
-        else
-          return index.status === (filters.status === 1 ? true : false);
-      });
-    }
-    if(strSearch !== '') {
-      tasks = filter(tasks, (index) => {
-        return includes(index.name.toLowerCase(), strSearch);
-      });
-    }
+    // if(filters) {
+    //   tasks = filter(tasks, (index) => {
+    //     return includes(index.name.toLowerCase(), filters.name);
+    //   });
+    //   tasks = filter(tasks, (index) => {
+    //     if (filters.status === -1)
+    //       return index;
+    //     else
+    //       return index.status === (filters.status === 1 ? true : false);
+    //   });
+    // }
+    // if(strSearch !== '') {
+    //   tasks = filter(tasks, (index) => {
+    //     return includes(index.name.toLowerCase(), strSearch);
+    //   });
+    // }
 
-    tasks = funcOrderBy(tasks, [sortBy], [sortDir]);
+    // tasks = funcOrderBy(tasks, [sortBy], [sortDir]);
 
     let showFrm = isDisplayFrm ?  <TaskForm 
                                     onCloseFrm={this.onToggleFrm} 

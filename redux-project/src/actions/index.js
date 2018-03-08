@@ -5,3 +5,10 @@ export const ListAll = () => {
         type: types.LIST_All
     }
 };
+
+export const AddTask = (task) => {
+    return {
+        type: types.ADD_TASK,
+        task
+    }
+};
