@@ -13,6 +13,13 @@ export const AddTask = (task) => {
     }
 };
 
+export const DeleteTask = (id) => {
+    return {
+        type: types.DELETE_TASK,
+        id
+    }
+};
+
 export const ToggleForm = () => {
     return {
         type: types.TOGGLE_FORM,
