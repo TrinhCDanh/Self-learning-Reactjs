@@ -7,13 +7,10 @@ export default class Control extends Component {
     return (
         <div className="row mt-15 margin-bottom">
             <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <Search onSearch={this.props.onSearch}/>
+                <Search />
             </div>
             <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <Sort 
-                    onSort={this.props.onSort}
-                    sortBy={this.props.sortBy} sortDir={this.props.sortDir}
-                />
+                <Sort />
             </div>
         </div>
     );

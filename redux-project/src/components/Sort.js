@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from './../actions/index';
 
-export default class Sort extends Component {
+class Sort extends Component {
 
-    onSort = (sortBy, sortDir) => { 
-        this.props.onSort(sortBy, sortDir);
+    onSort = (sortBy, sortDir) => {
+        var sort = {
+            sortBy: sortBy,
+            sortDir: sortDir
+        } 
+        this.props.onSort(sort);
     }
 
     render() {
-        let {sortBy, sortDir} = this.props;
+        let { isSort } = this.props;
+        console.log(isSort);
+        var sortBy = isSort.sortBy;
+        var sortDir = isSort.sortDir;
         return (
             <div className="dropdown">
                 <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -40,3 +49,19 @@ export default class Sort extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+      isSort: state.sort
+    }
+  }
+  
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+            onSort: (sort) => {
+                dispatch(actions.SortTask(sort));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sort);

@@ -49,7 +49,7 @@ class TaskForm extends Component {
 
     onSubmit = (event) => {
         // Add and Close Frm
-        this.props.onAddTask(this.state);
+        this.props.onSaveTask(this.state);
         this.props.onCloseFrm();
         event.preventDefault();
         this.onClear();
@@ -71,8 +71,8 @@ class TaskForm extends Component {
             <div className="panel panel-warning">
                 <div className="panel-heading">
                     <h3 className="panel-title">
-                        {this.props.taskedit ? 'Cập Nhật Công Việc' : 'Thêm Công Việc'}
-                        <span className="fa fa-times-circle text-right"
+                        {this.props.taskedit.id !== '' ? 'Cập Nhật Công Việc' : 'Thêm Công Việc'}
+                        <span className="fa fa-times-circle text-right" style={{float: 'right', cursor: 'pointer'}}
                             onClick={this.onCloseFrm}
                         ></span>
                     </h3>
@@ -108,13 +108,13 @@ class TaskForm extends Component {
 
 const mapStatetoProps = (state) => {
     return {
-
+        taskedit: state.loadTask
     }
 }
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        onAddTask: (task) => {
-            dispatch(actions.AddTask(task));
+        onSaveTask: (task) => {
+            dispatch(actions.SaveTask(task));
         },
         onCloseFrm: () => {
             dispatch(actions.CloseForm());

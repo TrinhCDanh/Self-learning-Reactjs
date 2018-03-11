@@ -1,5 +1,5 @@
 import * as types from './../constants/ActionTypes';
-import {filter, includes, orderBy as funcOrderBy, remove, findIndex} from 'lodash';
+import {orderBy as funcOrderBy, remove, findIndex} from 'lodash';
 
 var s4 = () => {
     return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
@@ -16,13 +16,19 @@ const myReducer = (state = initialState, action) => {
     switch(action.type) {
         case types.LIST_All:
             return state;
-        case types.ADD_TASK:
-            var newTask = {
-                id: createId(),
+        case types.SAVE_TASK:
+            var task = {
+                id: action.task.id,
                 name: action.task.name,
                 status: action.task.status ? true : false
             }
-            state.push(newTask);
+            if(!task.id) {
+                task.id = createId();
+                state.push(task);
+            } else {
+                var index = findIndex(state, {id: action.task.id});
+                state[index] = task;
+            }
             localStorage.setItem('tasks', JSON.stringify(state) );
             return [...state];
         case types.UPDATE_STATUS:
@@ -30,7 +36,7 @@ const myReducer = (state = initialState, action) => {
             state[index] = {
                 ...state[index],
                 status : !state[index].status 
-            }
+            } // i don't understand
             localStorage.setItem('tasks', JSON.stringify(state) );
             return [...state];
         case types.DELETE_TASK:
